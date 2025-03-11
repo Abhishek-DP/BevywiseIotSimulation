@@ -31,19 +31,19 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">README</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    This file walkthroughs the demonstration of Simulation  to jumpstart your projects!
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Abhishek-DP/BevywiseIotSimulation/README"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/Abhishek-DP/BevywiseIotSimulation/README">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/Abhishek-DP/BevywiseIotSimulation/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/Abhishek-DP/BevywiseIotSimulation/issues">Request Feature</a>
   </p>
 </p>
 
@@ -80,25 +80,32 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://drive.google.com/file/d/1_mOyGWOO0TosC8LrTmjNG7u0RXqfGGQf/view?usp=drive_link)
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+Welcome to the Simulation Project! This project is designed to provide an in-depth walkthrough of a simulation process, helping users understand and replicate complex scenarios with ease. Whether you are a researcher, developer, or enthusiast, this project serves as a guide to implementing and analyzing simulations efficiently.
+Key Features
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should element DRY principles to the rest of your life :smile:
+✅ Step-by-Step Simulation Process – Easy-to-follow instructions to run and modify the simulation.
+✅ Modular and Scalable – Built with reusable components to extend functionality effortlessly.
+✅ Optimized Performance – Efficient handling of data and rendering for seamless execution.
+✅ User-Friendly Interface – Intuitive design using modern UI frameworks.
+✅ Open-Source Collaboration – Contributions and feature requests are always welcome!
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have have contributed to expanding this template!
+This project simplifies simulation complexities, allowing users to grasp the core concepts and customize them according to their needs.
+
+This project is designed to simulate IoT-based environments using a robust stack of modern technologies. It leverages cloud infrastructure, MQTT communication protocols, and web technologies to provide an efficient and scalable simulation experience.
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
 ### Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
+This project is powered by the following technologies:
+
+*    AWS EC2 (Ubuntu Free-Tier Version) – Cloud hosting for scalable and reliable deployment.
+*    Bevywise IoT Simulation Tool – Provides IoT device simulation for testing and development.
+*    Express.js – A fast and lightweight Node.js web application framework.
+*    NGINX – Used as a reverse proxy and load balancer for handling web traffic.
+*    Aedes MQTT Broker – A high-performance MQTT broker for handling IoT messaging.
 
 
 
@@ -113,21 +120,60 @@ To get a local copy up and running follow these simple example steps.
 This is an example of how to list things you need to use the software and how to install them.
 * npm
   ```sh
-  npm install npm@latest -g
+  sudo apt install node -y
   ```
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Create a AWS account [https://console.aws.amazon.com]
+2. Create Key pair (login) or use existing once
+3. Create a ubuntu instance (with free tier), change the `Configure storage` to min 20 GiB and Launch instance 
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   https://ap-south-1.console.aws.amazon.com/ec2/home?region=ap-south-1#LaunchInstances:
    ```
-3. Install NPM packages
+4. Update security group
+   ```sh
+   https://ap-south-1.console.aws.amazon.com/ec2/home?region=ap-south-1#SecurityGroups:
+   ```
+   * Edit inbound rules
+   * Add rules
+   1. Port-1882
+     * Type: custom TCP
+     * Port range: 1882
+     * Source type: Anywhere-IP-V4
+   2. Port-80       
+     * Type: HTTP
+     * Port range: 80
+     * Source type: Anywhere-IP-V4  
+   3. Port-22
+     * Type: SSH
+     * Port range: 22
+     * Source type: Anywhere-IP-V4
+   4. Port-12345       
+     * Type: custom TCP
+     * Port range: 12345
+     * Source type: Anywhere-IP-V4  
+   5. Port-8083
+     * Type: custom TCP
+     * Port range: 8083
+     * Source type: Anywhere-IP-V4
+  * Once added all the changes click on `Save rules`
+6. Once instance is launched click on connect
+   ```sh
+   https://ap-south-1.console.aws.amazon.com/ec2/home?region=ap-south-1#Instances:
+   ```
+  * Use SSH client which can be understood by simple means as given by the aws.
+  * Copy the Example code and run this on the terminal.
+7. 
+3. Clone the repo
+   ```sh
+   https://ap-south-1.console.aws.amazon.com/ec2/home?region=ap-south-1#LaunchInstances:
+   ```
+4. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+5. Enter your API in `config.js`
    ```JS
    const API_KEY = 'ENTER YOUR API';
    ```
