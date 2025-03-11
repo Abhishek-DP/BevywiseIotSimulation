@@ -1,0 +1,83 @@
+# Main HTTP server for general requests
+server {
+    listen 80;
+    server_name 13.234.120.105;
+
+    # Default location for root traffic
+    location / {
+        # Enable authentication
+        auth_basic "Restricted Access";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+
+        # Proxy pass to the main Express server running on port 9001
+        proxy_pass http://localhost:9000;  # Updated to port 9001
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # Special location for /logout
+    location = /logout {
+        return 401;
+    }
+
+    # Handling /graphs location, proxying to the Express server running on port 9001
+    location /graphs {
+	auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+
+        proxy_pass http://localhost:9001/graphs;  # Updated to port 9001
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    # ✅ Proxy sensor-data API requests to Node.js (running on port 9001)
+    location /sensor-data {
+	auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+
+        proxy_pass http://localhost:9001/sensor-data;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+# WebSocket Reverse Proxy for MQTT WebSocket on port 8083
+server {
+    listen 8083;
+    server_name 13.234.120.105;
+
+    location / {
+        proxy_pass http://localhost:8081;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_cache_bypass $http_upgrade;
+
+        # Set timeouts to avoid gateway timeouts
+        proxy_connect_timeout 600s;
+        proxy_read_timeout 600s;
+        proxy_send_timeout 600s;
+        send_timeout 600s;
+    }
+}
+
+# MQTT Broker Reverse Proxy (Port 1882)
+server {
+    listen 1882;
+    server_name 13.234.120.105;
+
+    location / {
+        proxy_pass http://localhost:1883;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+

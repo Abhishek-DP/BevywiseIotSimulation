@@ -1,0 +1,15 @@
+[Unit]
+Description=Bevywise IoT Simulator
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/Bevywise/IoTSimulator/bin
+ExecStart=/bin/bash /home/ubuntu/Bevywise/IoTSimulator/bin/runsimulator.sh
+Restart=always
+RestartSec=5s
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
